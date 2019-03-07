@@ -4,7 +4,7 @@
  * was just accessed. It also ignores requests to blocks already in the cache.
  */
 
-#include "interface.hh"
+#include "buffer.cc"
 
 void prefetch_init(void)
 {
@@ -23,7 +23,7 @@ void prefetch_access(AccessStat stat)
      * Issue a prefetch request if a demand miss occured,
      * and the block is not already in cache.
      */
-    if (stat.miss && !in_cache(pf_addr)) {
+    if (stat.miss && !in_cache(pf_addr) && !in_mshr_queue(pf_addr)) {
         issue_prefetch(pf_addr);
     }
 }

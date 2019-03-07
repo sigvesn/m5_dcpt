@@ -6,6 +6,7 @@
 !src/
 !src/*
 src/*.swp
+src/*.swo
 !sources/
 !sources/*
 !test.sh
