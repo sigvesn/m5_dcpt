@@ -15,13 +15,13 @@ struct dcpt_table_entry {
     Addr last_addr;
     Addr last_prefetch;
     circular_buffer delta_pointer;
+    uint8_t lru;
 };
 
 struct inFlight {
     circular_buffer inFlight_pointer;
 };
 
-
 void circular_buffer_set(circular_buffer dp, int64_t value);
 int64_t circular_buffer_get(circular_buffer dp);
-dcpt_table_entry *table_lookup(dcpt_table_entry *table, Addr pc);
+dcpt_table_entry* table_lookup(dcpt_table_entry* table, Addr pc);
