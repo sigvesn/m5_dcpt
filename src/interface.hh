@@ -1,3 +1,5 @@
+#pragma once
+
 /* C interface for prefetchers. */
 /* DO NOT MODIFY THIS FILE */
 

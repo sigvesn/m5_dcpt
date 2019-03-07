@@ -6,18 +6,28 @@
 
 #include "buffer.cc"
 
+static dcpt_table_entry dcpt_table[table_size] = {};
+
 void prefetch_init(void)
 {
     /* Called before any calls to prefetch_access. */
     /* This is the place to initialize data structures. */
 
     //DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
+
+	// map<Addr, dcpt_table_entry> table;
+
+	for (int i = 0; i < table_size; ++i) {
+		DPRINTF(HWPrefetch, "HELLO\n");
+	}
 }
 
 void prefetch_access(AccessStat stat)
 {
     /* pf_addr is now an address within the _next_ cache block */
     Addr pf_addr = stat.mem_addr + BLOCK_SIZE;
+
+	// lookup(pf_addr, dcpt_table);
 
     /*
      * Issue a prefetch request if a demand miss occured,
