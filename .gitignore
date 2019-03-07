@@ -8,3 +8,4 @@
 src/*.swp
 !sources/
 !sources/*
+!test.sh
