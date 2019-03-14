@@ -11,11 +11,10 @@ struct circular_buffer {
 };
 
 struct dcpt_table_entry {
-    Addr pc;
+    // Addr pc;
     Addr last_addr;
     Addr last_prefetch;
     circular_buffer delta_pointer;
-    uint8_t lru;
 };
 
 struct inFlight {

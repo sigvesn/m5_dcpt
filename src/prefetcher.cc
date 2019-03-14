@@ -5,8 +5,37 @@
  */
 
 #include "buffer.cc"
+#include <map>
+#include <queue>
 
-static dcpt_table_entry dcpt_table[table_size] = {};
+struct dcpt_table {
+    map<Addr, dcpt_table_entry> dcpt_table;
+    queue<Addr> program_counters;
+
+    dcpt_table_entry& insert(Addr)
+    {
+        if (program_counters.size() > table_size) {
+            Addr pc = program_counters.front();
+            program_counters.pop();
+            dcpt_table.erase(pc);
+        }
+
+        program_counters.push(Addr);
+        return dcpt_table[Addr];
+    }
+
+    dcpt_table_entry& lookup(Addr)
+    {
+        if (dcpt_table.find(Addr) == m.end()) {
+            return insert(Addr);
+        } else {
+            return dcpt_table[Addr];
+        }
+    }
+}
+
+// static dcpt_table_entry dcpt_table[table_size] = {};
+static dcpt_table dcpt;
 
 void prefetch_init(void)
 {
@@ -14,12 +43,6 @@ void prefetch_init(void)
     /* This is the place to initialize data structures. */
 
     //DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
-
-	// map<Addr, dcpt_table_entry> table;
-
-	for (int i = 0; i < table_size; ++i) {
-		DPRINTF(HWPrefetch, "HELLO\n");
-	}
 }
 
 void prefetch_access(AccessStat stat)
@@ -27,7 +50,7 @@ void prefetch_access(AccessStat stat)
     /* pf_addr is now an address within the _next_ cache block */
     Addr pf_addr = stat.mem_addr + BLOCK_SIZE;
 
-	// lookup(pf_addr, dcpt_table);
+    // lookup(pf_addr, dcpt_table);
 
     /*
      * Issue a prefetch request if a demand miss occured,
