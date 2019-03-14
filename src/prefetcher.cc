@@ -5,6 +5,7 @@
  */
 
 #include "buffer.hh"
+#include <iostream>
 using namespace std;
 
 static dcpt_table dcpt;
@@ -27,11 +28,16 @@ void prefetch_init(void)
 
 void prefetch_access(AccessStat stat)
 {
-    dcpt_table_entry entry = dcpt.lookup(stat.mem_addr);
+	bool inserted = false;
+    dcpt_table_entry entry = dcpt.lookup(stat.pc, stat.mem_addr, inserted);
 
-    if (stat.mem_addr == entry.last_addr) {
+	entry.last_addr = stat.mem_addr;
+
+	if (inserted) {
+		std::cerr << "Heisann\n";
+		// pass
+	} else if (stat.mem_addr != entry.last_addr) {
         entry.delta_buffer.push(stat.mem_addr - entry.last_addr);
-        entry.last_addr = stat.mem_addr;
 
         vector<Addr> candidates = delta_correlation(entry);
         vector<Addr> prefetches = prefetch_filter(entry, candidates);
@@ -63,21 +69,27 @@ vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr> candidates)
 vector<Addr> delta_correlation(dcpt_table_entry entry)
 {
     vector<Addr> candidates;
+	if (entry.delta_buffer.buffer.size() < 2)
+		return candidates;
 
     deque<int64_t>::reverse_iterator it = entry.delta_buffer.buffer.rbegin();
 
-    Addr d1 = *(++it);
-    Addr d2 = *(++it);
+    Addr d1 = *(it++);
+    Addr d2 = *it;
 
     Addr address = entry.last_addr;
 
-    for (int i = 0; i < buf_size - 2; ++i) {
-        Addr u = *(it++);
-        Addr v = *(it);
+	for (deque<int64_t>::iterator iit = entry.delta_buffer.buffer.begin(); iit+1 != entry.delta_buffer.buffer.end(); ) {
+        Addr u = *(iit++);
+        Addr v = *(iit);
 
-        if (u == d1 && v == d2) {
-            for (; it != entry.delta_buffer.buffer.rend(); ++it) {
-                address += *it;
+        if (u == d2 && v == d1) {
+			address += u;
+			candidates.push_back(address);
+			address += v;
+			candidates.push_back(address);
+            for (; iit != entry.delta_buffer.buffer.end(); ++iit) {
+                address += *iit;
                 candidates.push_back(address);
             }
             break;

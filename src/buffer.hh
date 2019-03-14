@@ -5,13 +5,12 @@
 #include <queue>
 
 static const uint64_t buf_size = 32;
-static const uint64_t table_size = 256;
+static const uint64_t table_size = 2048;
 
 struct circular_buffer {
     std::deque<int64_t> buffer;
 
     void push(int64_t value);
-    int64_t get();
 };
 
 struct dcpt_table_entry {
@@ -21,9 +20,9 @@ struct dcpt_table_entry {
 };
 
 struct dcpt_table {
-    std::map<Addr, dcpt_table_entry> dcpt_table;
+    std::map<Addr, dcpt_table_entry> table;
     std::queue<Addr> program_counters;
 
-    dcpt_table_entry& lookup(Addr a);
-    dcpt_table_entry& insert(Addr a);
+    dcpt_table_entry& insert(Addr, Addr);
+    dcpt_table_entry& lookup(Addr, Addr, bool&);
 };
