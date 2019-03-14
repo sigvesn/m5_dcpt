@@ -1,9 +1,18 @@
 #pragma once
 #include "interface.hh"
 #include <map>
+#include <queue>
 
 static const uint64_t buf_size = 32;
 static const uint64_t table_size = 256;
+
+struct dcpt_table {
+    map<Addr, dcpt_table_entry> dcpt_table;
+    queue<Addr> program_counters;
+
+    dcpt_table_entry& lookup(Addr);
+    dcpt_table_entry& insert(Addr);
+}
 
 struct circular_buffer {
     uint64_t index;

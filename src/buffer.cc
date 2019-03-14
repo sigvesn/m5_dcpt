@@ -12,7 +12,23 @@ int64_t circular_buffer_get(circular_buffer dp)
     return dp.buffer[dp.index];
 }
 
-dcpt_table_entry* table_lookup(dcpt_table_entry* table, Addr pc)
+dcpt_table_entry& dcpt_table::insert(Addr pc)
 {
-    dcpt_table_entry* return_pc = table[0];
+    if (program_counters.size() > table_size) {
+        Addr old_pc = program_counters.front();
+        program_counters.pop();
+        dcpt_table.erase(old_pc);
+    }
+
+    program_counters.push(pc);
+    return dcpt_table[pc];
+}
+
+dcpt_table_entry& dcpt_table::lookup(Addr pc)
+{
+    if (dcpt_table.find(pc) == m.end()) {
+        return insert(pc);
+    } else {
+        return dcpt_table[pc];
+    }
 }

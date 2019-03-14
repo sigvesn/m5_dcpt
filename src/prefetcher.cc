@@ -5,34 +5,6 @@
  */
 
 #include "buffer.cc"
-#include <map>
-#include <queue>
-
-struct dcpt_table {
-    map<Addr, dcpt_table_entry> dcpt_table;
-    queue<Addr> program_counters;
-
-    dcpt_table_entry& insert(Addr)
-    {
-        if (program_counters.size() > table_size) {
-            Addr pc = program_counters.front();
-            program_counters.pop();
-            dcpt_table.erase(pc);
-        }
-
-        program_counters.push(Addr);
-        return dcpt_table[Addr];
-    }
-
-    dcpt_table_entry& lookup(Addr)
-    {
-        if (dcpt_table.find(Addr) == m.end()) {
-            return insert(Addr);
-        } else {
-            return dcpt_table[Addr];
-        }
-    }
-}
 
 // static dcpt_table_entry dcpt_table[table_size] = {};
 static dcpt_table dcpt;
