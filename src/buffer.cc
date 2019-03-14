@@ -26,7 +26,7 @@ dcpt_table_entry& dcpt_table::insert(Addr pc)
 
 dcpt_table_entry& dcpt_table::lookup(Addr pc)
 {
-    if (dcpt_table.find(pc) == m.end()) {
+    if (dcpt_table.find(pc) == dcpt_table.end()) {
         return insert(pc);
     } else {
         return dcpt_table[pc];
