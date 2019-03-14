@@ -1,15 +1,14 @@
 #include "buffer.hh"
 #include "interface.hh"
 
-void circular_buffer_set(circular_buffer dp, int64_t value)
-{
-    dp.buffer[dp.index] = value;
-    dp.index = (dp.index + 1) % buf_size;
-}
+using namespace std;
 
-int64_t circular_buffer_get(circular_buffer dp)
+void circular_buffer::push(int64_t value)
 {
-    return dp.buffer[dp.index];
+    if (buffer.size() == buf_size)
+        buffer.pop_front();
+
+    buffer.push_back(value);
 }
 
 dcpt_table_entry& dcpt_table::insert(Addr pc)

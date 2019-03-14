@@ -4,3 +4,4 @@
 
 Import('*')
 Source('prefetcher.cc')
+Source('buffer.cc')
