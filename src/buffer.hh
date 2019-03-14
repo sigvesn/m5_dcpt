@@ -2,8 +2,8 @@
 #include "interface.hh"
 #include <map>
 
-static const uint64_t buf_size = 4096;
-static const uint64_t table_size = 4096;
+static const uint64_t buf_size = 32;
+static const uint64_t table_size = 256;
 
 struct circular_buffer {
     uint64_t index;
