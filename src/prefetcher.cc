@@ -7,6 +7,7 @@
 #include "buffer.hh"
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ static dcpt_table dcpt;
 vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates);
 vector<Addr> delta_correlation(dcpt_table_entry entry);
 
-circular_buffer in_flight(MAX_QUEUE_SIZE);
+static circular_buffer in_flight(IN_FLIGHT_BUFFER_SIZE);
 
 void prefetch_init(void)
 {
@@ -44,13 +45,19 @@ void issue_prefetches(vector<Addr>& prefetches, dcpt_table_entry& entry)
 void prefetch_access(AccessStat stat)
 {
 	bool inserted = false;
-    dcpt_table_entry& entry = dcpt.lookup(stat.pc, stat.mem_addr, inserted);
+    dcpt_table_entry& entry = dcpt.lookup(stat.pc, inserted);
 
 
 	if (inserted) {
 		entry.last_addr = stat.mem_addr;
 	} else if (stat.mem_addr != entry.last_addr) {
-        entry.delta_buffer.push(stat.mem_addr - entry.last_addr);
+		int64_t delta = stat.mem_addr - entry.last_addr;
+
+		// discard delta if it's wider than max delta width
+		if (delta > pow(2, DELTA_WIDTH) - 1)
+			return;
+
+        entry.delta_buffer.push(delta);
 		entry.last_addr = stat.mem_addr;
 
         vector<Addr> candidates = delta_correlation(entry);
