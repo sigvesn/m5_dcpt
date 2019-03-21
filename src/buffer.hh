@@ -8,8 +8,8 @@
 
 
 #define ENTRY_TABLE_SIZE      98
-#define DELTA_BUFFER_SIZE     19
-#define DELTA_WIDTH           12
+#define DELTA_BUFFER_SIZE     32
+#define DELTA_WIDTH           32
 #define IN_FLIGHT_BUFFER_SIZE 32
 
 
