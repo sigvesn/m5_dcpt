@@ -6,12 +6,16 @@
 
 #include "buffer.hh"
 #include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 static dcpt_table dcpt;
 
 vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates);
 vector<Addr> delta_correlation(dcpt_table_entry entry);
+
+circular_buffer in_flight(MAX_QUEUE_SIZE);
 
 void prefetch_init(void)
 {
@@ -26,12 +30,13 @@ void prefetch_init(void)
 //     issue_prefetch(pf_addr);
 // }
 
-void issue_prefetch(vector<Addr>& prefetches, dcpt_table_entry& entry)
+void issue_prefetches(vector<Addr>& prefetches, dcpt_table_entry& entry)
 {
-	for (vector<Addr>::iterator addr = prefetches.begin(); addr != prefetches.end(); ++addr) {
+	for (addr_it addr = prefetches.begin(); addr != prefetches.end(); ++addr) {
 		if (current_queue_size() < MAX_QUEUE_SIZE) {
 			issue_prefetch(*addr);
 			entry.last_prefetch = *addr;
+			in_flight.push(*addr);
 		}
 	}
 }
@@ -51,7 +56,7 @@ void prefetch_access(AccessStat stat)
         vector<Addr> candidates = delta_correlation(entry);
         vector<Addr> prefetches = prefetch_filter(entry, candidates);
 
-		issue_prefetch(prefetches, entry);
+		issue_prefetches(prefetches, entry);
     }
 }
 
@@ -59,10 +64,11 @@ vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates)
 {
     vector<Addr> prefetches;
 
-    for (vector<Addr>::iterator candidate = candidates.begin(); candidate != candidates.end(); ++candidate) {
+    for (addr_it candidate = candidates.begin(); candidate != candidates.end(); ++candidate) {
 
-        if (!in_cache(*candidate) && !in_mshr_queue(*candidate) && current_queue_size() < MAX_QUEUE_SIZE) {
+        if (!in_cache(*candidate) && !in_mshr_queue(*candidate) && !in_flight.in(*candidate)) {
             prefetches.push_back(*candidate);
+			in_flight.push(*candidate);
         }
 
         if (*candidate == entry.last_prefetch) {
@@ -76,35 +82,35 @@ vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates)
 vector<Addr> delta_correlation(dcpt_table_entry entry)
 {
     vector<Addr> candidates;
-	if (entry.delta_buffer.buffer.size() < 2)
+	if (entry.delta_buffer.size() < 2)
 		return candidates;
 
 	// std::cerr << "DELTA_CORRELATE\n";
-    deque<int64_t>::reverse_iterator rit = entry.delta_buffer.buffer.rbegin();
+    deque<int64_t>::reverse_iterator rit = entry.delta_buffer.rbegin();
 
     Addr d1 = *(rit++);
     Addr d2 = *rit;
 
     Addr address = entry.last_addr;
 
-	for (deque<int64_t>::iterator it = entry.delta_buffer.buffer.begin(); it+1 != entry.delta_buffer.buffer.end(); ) {
+	for (deq_it it = entry.delta_buffer.begin(); it+1 != entry.delta_buffer.end(); ) {
         Addr u = *(it++);
-        Addr v = *(it);
+        Addr v = *(it++);
 
         if (u == d2 && v == d1) {
-			// address += u;
-			// candidates.push_back(address);
-			// address += v;
-			// candidates.push_back(address);
-			++it;
-            for (; it != entry.delta_buffer.buffer.end(); ++it) {
-				// std::cerr << "Found a match, adding.\n";
+            for (; it != entry.delta_buffer.end(); ++it) {
                 address += *it;
+
+				// Make sure to not prefetch outside of physical memory
+				if (address >= MAX_PHYS_MEM_ADDR)
+					break;
+				
                 candidates.push_back(address);
             }
             break;
         }
     }
+
     return candidates;
 }
 
@@ -113,4 +119,6 @@ void prefetch_complete(Addr addr)
     /*
      * Called when a block requested by the prefetcher has been loaded.
      */
+
+	in_flight.erase(find(in_flight.begin(), in_flight.end(), addr), in_flight.end());
 }

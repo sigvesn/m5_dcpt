@@ -7,7 +7,7 @@ using namespace std;
 
 void circular_buffer::push(int64_t value)
 {
-    if (buffer.size() == buf_size)
+    if (buffer.size() == buffer_size)
         buffer.pop_front();
 
     buffer.push_back(value);
