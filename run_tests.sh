@@ -7,7 +7,7 @@ function add {
     table[$idx]=$1
     in_flight[$idx]=$2
     delta_buffer[$idx]=$3
-    delta_size[$idx]=$4
+    delta_width[$idx]=$4
     let idx++
 }
 
@@ -15,7 +15,7 @@ add 98 32 19 12
 add 10 10 10 10
 
 for i in ${!table[*]}; do
-    t=${table[$i]}; i_f=${in_flight[$i]}; d_b=${delta_buffer[$i]}; d_s=${delta_size[$i]}
+    t=${table[$i]}; i_f=${in_flight[$i]}; d_b=${delta_buffer[$i]}; d_s=${delta_width[$i]}
     
     echo "running: $t, $i_f, $d_b, $d_s"
 
@@ -27,9 +27,9 @@ for i in ${!table[*]}; do
     make
     mv stats.txt results/stats_${i}.txt
 
-    echo " run with:
-    table size:        $t
-    in_flight size:    $i_f
-    delta buffer size: $d_b
-    delta size:        $d_s" >> results/stats_${i}.txt
+    echo "\nrun with:
+    \ttable size:        $t
+    \tin_flight size:    $i_f
+    \tdelta buffer size: $d_b
+    \tdelta width:       $d_s" >> results/stats_${t}_${i_f}_${d_b}_${d_w}.txt
 done
