@@ -13,8 +13,8 @@ using namespace std;
 
 static dcpt_table dcpt;
 
-vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates);
-vector<Addr> delta_correlation(dcpt_table_entry entry);
+vector<Addr> prefetch_filter(dcpt_table_entry& entry, vector<Addr>& candidates);
+vector<Addr> delta_correlation(dcpt_table_entry& entry);
 
 static circular_buffer in_flight(IN_FLIGHT_BUFFER_SIZE);
 
@@ -25,14 +25,11 @@ void prefetch_init(void)
 
     //DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
 }
-// Addr pf_addr = stat.mem_addr + BLOCK_SIZE;
-//
-// if (stat.miss && !in_cache(pf_addr) && !in_mshr_queue(pf_addr)) {
-//     issue_prefetch(pf_addr);
-// }
 
 void issue_prefetches(vector<Addr>& prefetches, dcpt_table_entry& entry)
 {
+	// For all candidates, issue the prefetches as long as there's enough room
+	// in the prefetch queue.
 	for (addr_it addr = prefetches.begin(); addr != prefetches.end(); ++addr) {
 		if (current_queue_size() < MAX_QUEUE_SIZE) {
 			issue_prefetch(*addr);
@@ -46,7 +43,6 @@ void prefetch_access(AccessStat stat)
 {
 	bool inserted = false;
     dcpt_table_entry& entry = dcpt.lookup(stat.pc, inserted);
-
 
 	if (inserted) {
 		entry.last_addr = stat.mem_addr;
@@ -67,7 +63,7 @@ void prefetch_access(AccessStat stat)
     }
 }
 
-vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates)
+vector<Addr> prefetch_filter(dcpt_table_entry& entry, vector<Addr>& candidates)
 {
     vector<Addr> prefetches;
 
@@ -86,20 +82,19 @@ vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates)
     return prefetches;
 }
 
-vector<Addr> delta_correlation(dcpt_table_entry entry)
+vector<Addr> delta_correlation(dcpt_table_entry& entry)
 {
     vector<Addr> candidates;
 	if (entry.delta_buffer.size() < 2)
 		return candidates;
 
-	// std::cerr << "DELTA_CORRELATE\n";
-    deque<int64_t>::reverse_iterator rit = entry.delta_buffer.rbegin();
-
+	// Delta values of the two last entries in the delta buffer
+    deq_rit rit = entry.delta_buffer.rbegin();
     Addr d1 = *(rit++);
     Addr d2 = *rit;
 
+	// Idendify candidates to prefetch, matching on deltas
     Addr address = entry.last_addr;
-
 	for (deq_it it = entry.delta_buffer.begin(); it+1 != entry.delta_buffer.end(); ) {
         Addr u = *(it++);
         Addr v = *(it++);
@@ -123,9 +118,6 @@ vector<Addr> delta_correlation(dcpt_table_entry entry)
 
 void prefetch_complete(Addr addr)
 {
-    /*
-     * Called when a block requested by the prefetcher has been loaded.
-     */
-
-	in_flight.erase(find(in_flight.begin(), in_flight.end(), addr), in_flight.end());
+	// Remove from in_flight queue such that it doesn't match on complete prefetches
+	in_flight.erase(addr);
 }
