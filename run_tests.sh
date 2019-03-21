@@ -36,11 +36,12 @@ for i in ${!table[*]}; do
     sed -i "s/\(define DELTA_WIDTH\).*/\1           $d_s/g" src/buffer.hh
 
     make
-    mv stats.txt results/stats_${i}.txt
+    filename=results/stats_${t}_${i_f}_${d_b}_${d_w}.txt
+    mv stats.txt ${filename}
 
     echo "\nrun with:
     \ttable size:        $t
     \tin_flight size:    $i_f
     \tdelta buffer size: $d_b
-    \tdelta width:       $d_s" >> results/stats_${t}_${i_f}_${d_b}_${d_w}.txt
+    \tdelta width:       $d_s" >> ${filename}
 done
