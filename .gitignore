@@ -10,3 +10,4 @@ src/*.swo
 !sources/
 !sources/*
 !test.sh
+!run_tests.sh
