@@ -36,7 +36,7 @@ for i in ${!table[*]}; do
     sed -i "s/\(define DELTA_WIDTH\).*/\1           $d_s/g" src/buffer.hh
 
     make
-    filename=results/stats_${t}_${i_f}_${d_b}_${d_w}.txt
+    filename=results/stats_${t}_${i_f}_${d_b}_${d_s}.txt
     mv stats.txt ${filename}
 
     echo "\nrun with:
