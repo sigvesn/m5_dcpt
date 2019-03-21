@@ -10,7 +10,7 @@ using namespace std;
 
 static dcpt_table dcpt;
 
-vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr> candidates);
+vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates);
 vector<Addr> delta_correlation(dcpt_table_entry entry);
 
 void prefetch_init(void)
@@ -26,29 +26,36 @@ void prefetch_init(void)
 //     issue_prefetch(pf_addr);
 // }
 
+void issue_prefetch(vector<Addr>& prefetches, dcpt_table_entry& entry)
+{
+	for (vector<Addr>::iterator addr = prefetches.begin(); addr != prefetches.end(); ++addr) {
+		if (current_queue_size() < MAX_QUEUE_SIZE) {
+			issue_prefetch(*addr);
+			entry.last_prefetch = *addr;
+		}
+	}
+}
+
 void prefetch_access(AccessStat stat)
 {
 	bool inserted = false;
-    dcpt_table_entry entry = dcpt.lookup(stat.pc, stat.mem_addr, inserted);
+    dcpt_table_entry& entry = dcpt.lookup(stat.pc, stat.mem_addr, inserted);
 
-	entry.last_addr = stat.mem_addr;
 
 	if (inserted) {
-		std::cerr << "Heisann\n";
-		// pass
+		entry.last_addr = stat.mem_addr;
 	} else if (stat.mem_addr != entry.last_addr) {
         entry.delta_buffer.push(stat.mem_addr - entry.last_addr);
+		entry.last_addr = stat.mem_addr;
 
         vector<Addr> candidates = delta_correlation(entry);
         vector<Addr> prefetches = prefetch_filter(entry, candidates);
-        for (vector<Addr>::iterator addr = prefetches.begin(); addr != prefetches.end(); ++addr) {
-            if (current_queue_size() < MAX_QUEUE_SIZE)
-                issue_prefetch(*addr);
-        }
+
+		issue_prefetch(prefetches, entry);
     }
 }
 
-vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr> candidates)
+vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr>& candidates)
 {
     vector<Addr> prefetches;
 
@@ -56,11 +63,11 @@ vector<Addr> prefetch_filter(dcpt_table_entry entry, vector<Addr> candidates)
 
         if (!in_cache(*candidate) && !in_mshr_queue(*candidate) && current_queue_size() < MAX_QUEUE_SIZE) {
             prefetches.push_back(*candidate);
-            entry.last_prefetch = *candidate;
         }
 
-        if (*candidate == entry.last_prefetch)
+        if (*candidate == entry.last_prefetch) {
             prefetches.clear();
+		}
     }
 
     return prefetches;
@@ -72,24 +79,27 @@ vector<Addr> delta_correlation(dcpt_table_entry entry)
 	if (entry.delta_buffer.buffer.size() < 2)
 		return candidates;
 
-    deque<int64_t>::reverse_iterator it = entry.delta_buffer.buffer.rbegin();
+	// std::cerr << "DELTA_CORRELATE\n";
+    deque<int64_t>::reverse_iterator rit = entry.delta_buffer.buffer.rbegin();
 
-    Addr d1 = *(it++);
-    Addr d2 = *it;
+    Addr d1 = *(rit++);
+    Addr d2 = *rit;
 
     Addr address = entry.last_addr;
 
-	for (deque<int64_t>::iterator iit = entry.delta_buffer.buffer.begin(); iit+1 != entry.delta_buffer.buffer.end(); ) {
-        Addr u = *(iit++);
-        Addr v = *(iit);
+	for (deque<int64_t>::iterator it = entry.delta_buffer.buffer.begin(); it+1 != entry.delta_buffer.buffer.end(); ) {
+        Addr u = *(it++);
+        Addr v = *(it);
 
         if (u == d2 && v == d1) {
-			address += u;
-			candidates.push_back(address);
-			address += v;
-			candidates.push_back(address);
-            for (; iit != entry.delta_buffer.buffer.end(); ++iit) {
-                address += *iit;
+			// address += u;
+			// candidates.push_back(address);
+			// address += v;
+			// candidates.push_back(address);
+			++it;
+            for (; it != entry.delta_buffer.buffer.end(); ++it) {
+				// std::cerr << "Found a match, adding.\n";
+                address += *it;
                 candidates.push_back(address);
             }
             break;
