@@ -12,7 +12,18 @@ function add {
 }
 
 add 98 32 19 12
-add 10 10 10 10
+
+for t in $(seq 3 8); do
+    for i_f in $(seq 1 2); do
+        for d_b in $(seq 3 6); do
+            for d_w in $(seq 2 4); do
+
+                add $(($t*20)) $(($i_f*32)) $(($d_b*4)) $(($d_w*5))
+
+            done
+        done
+    done
+done
 
 for i in ${!table[*]}; do
     t=${table[$i]}; i_f=${in_flight[$i]}; d_b=${delta_buffer[$i]}; d_s=${delta_width[$i]}
