@@ -39,7 +39,7 @@ for i in ${!table[*]}; do
     filename=results/stats_${t}_${i_f}_${d_b}_${d_s}.txt
     mv stats.txt ${filename}
 
-    echo "\nrun with:
+    echo -e "\nrun with:
     \ttable size:        $t
     \tin_flight size:    $i_f
     \tdelta buffer size: $d_b
