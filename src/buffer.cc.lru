@@ -17,8 +17,7 @@ dcpt_table_entry& dcpt_table::insert(Addr pc)
 {
     if (program_counters.size() > ENTRY_TABLE_SIZE) {
 		// TODO: LRU
-
-        Addr old_pc = program_counters.front();
+		Addr old_pc = program_counters.front();
         program_counters.pop();
         table.erase(old_pc);
     }
@@ -34,6 +33,6 @@ dcpt_table_entry& dcpt_table::lookup(Addr pc, bool& inserted)
         return insert(pc);
     } else {
 		inserted = false;
-        return table[pc];
+        return table[pc]; // TODO: try .at() to verify existence and no foobary behaviour
     }
 }
