@@ -11,4 +11,6 @@ src/*.swo
 !sources/*
 !test.sh
 !run_tests.sh
+!gdb.sh
 !plenty_runs/
+!plenty_runs/*
