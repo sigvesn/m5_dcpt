@@ -1,0 +1,293 @@
+.
+./stats_160_64_16_15.txt
+   user                          1.05
+./stats_60_64_20_20.txt
+   user                          1.07
+./stats_120_32_16_20.txt
+   user                          1.08
+./stats_100_32_12_10.txt
+   user                          1.03
+./stats_60_32_24_15.txt
+   user                          1.06
+./stats_100_32_12_20.txt
+   user                          1.09
+./stats_60_64_24_20.txt
+   user                          1.06
+./stats_160_32_12_20.txt
+   user                          1.09
+./stats_60_64_16_20.txt
+   user                          1.07
+./stats_60_64_16_10.txt
+   user                          1.03
+./stats_100_32_24_20.txt
+   user                          1.07
+./stats_140_64_20_15.txt
+   user                          1.07
+./stats_140_32_24_15.txt
+   user                          1.07
+./stats_140_32_20_20.txt
+   user                          1.08
+./stats_100_32_20_15.txt
+   user                          1.07
+./stats_80_32_12_10.txt
+   user                          1.03
+./stats_80_32_16_10.txt
+   user                          1.03
+./stats_120_32_20_20.txt
+   user                          1.08
+./stats_80_64_12_15.txt
+   user                          1.05
+./stats_80_64_24_15.txt
+   user                          1.06
+./stats_160_32_16_20.txt
+   user                          1.08
+./stats_120_32_16_10.txt
+   user                          1.03
+./stats_160_32_20_10.txt
+   user                          1.03
+./stats_160_64_12_15.txt
+   user                          1.06
+./best_user_stats.txt
+./stats_80_32_12_15.txt
+   user                          1.06
+./stats_120_32_12_10.txt
+   user                          1.03
+./stats_120_64_24_15.txt
+   user                          1.07
+./stats_80_64_16_20.txt
+   user                          1.07
+./stats_160_64_24_15.txt
+   user                          1.07
+./stats_80_64_12_10.txt
+   user                          1.03
+./stats_80_32_16_15.txt
+   user                          1.05
+./stats_80_64_12_20.txt
+   user                          1.07
+./stats_120_64_20_15.txt
+   user                          1.07
+./stats_160_64_12_10.txt
+   user                          1.03
+./stats_120_64_20_10.txt
+   user                          1.03
+./stats_60_32_16_15.txt
+   user                          1.05
+./stats_140_32_12_20.txt
+   user                          1.09
+./stats_140_32_16_15.txt
+   user                          1.05
+./stats_100_64_16_15.txt
+   user                          1.05
+./stats_80_64_16_15.txt
+   user                          1.05
+./stats_120_64_12_15.txt
+   user                          1.06
+./stats_80_64_20_10.txt
+   user                          1.03
+./stats_140_64_24_20.txt
+   user                          1.07
+./stats_100_32_24_10.txt
+   user                          1.03
+./stats_120_32_12_15.txt
+   user                          1.06
+./stats_60_32_24_10.txt
+   user                          1.03
+./stats_60_64_24_15.txt
+   user                          1.06
+./stats_80_64_16_10.txt
+   user                          1.03
+./stats_160_32_20_20.txt
+   user                          1.08
+./stats_140_32_24_20.txt
+   user                          1.07
+./stats_60_32_16_10.txt
+   user                          1.03
+./stats_100_32_16_20.txt
+   user                          1.08
+./stats_160_64_24_20.txt
+   user                          1.07
+./stats_100_64_24_10.txt
+   user                          1.03
+./stats_120_64_16_15.txt
+   user                          1.05
+./stats_160_32_12_10.txt
+   user                          1.03
+./stats_100_32_24_15.txt
+   user                          1.07
+./stats_140_32_16_20.txt
+   user                          1.08
+./stats_80_32_16_20.txt
+   user                          1.07
+./stats_140_64_12_10.txt
+   user                          1.03
+./stats_100_64_20_15.txt
+   user                          1.07
+./stats_120_64_20_20.txt
+   user                          1.08
+./stats_100_64_24_20.txt
+   user                          1.07
+./stats_100_32_20_20.txt
+   user                          1.08
+./stats_60_64_12_15.txt
+   user                          1.06
+./stats_60_64_20_10.txt
+   user                          1.03
+./stats_160_64_20_10.txt
+   user                          1.03
+./stats_100_64_16_20.txt
+   user                          1.08
+./stats_120_32_16_15.txt
+   user                          1.05
+./stats_60_64_20_15.txt
+   user                          1.07
+./stats_80_32_24_15.txt
+   user                          1.06
+./stats_140_64_16_10.txt
+   user                          1.03
+./stats_140_64_16_15.txt
+   user                          1.05
+./stats_140_64_16_20.txt
+   user                          1.08
+./stats_140_64_20_10.txt
+   user                          1.03
+./stats_120_32_20_15.txt
+   user                          1.07
+./stats_60_64_24_10.txt
+   user                          1.03
+./stats_160_64_16_20.txt
+   user                          1.08
+./stats_140_32_24_10.txt
+   user                          1.03
+./stats_120_64_24_10.txt
+   user                          1.03
+./stats_80_32_20_10.txt
+   user                          1.03
+./stats_160_64_16_10.txt
+   user                          1.03
+./stats_80_64_20_20.txt
+   user                          1.07
+./stats_100_64_20_20.txt
+   user                          1.08
+./stats_140_32_20_15.txt
+   user                          1.07
+./stats_60_32_24_20.txt
+   user                          1.06
+./stats_98_32_19_12.txt
+   user                          1.04
+./stats_120_32_24_20.txt
+   user                          1.07
+./stats_100_64_16_10.txt
+   user                          1.03
+./stats_160_64_20_20.txt
+   user                          1.08
+./stats_60_32_12_20.txt
+   user                          1.07
+./stats_160_32_12_15.txt
+   user                          1.06
+./stats_160_32_16_15.txt
+   user                          1.05
+./stats_60_32_20_20.txt
+   user                          1.07
+./stats_100_32_16_15.txt
+   user                          1.05
+./stats_60_64_12_10.txt
+   user                          1.03
+./stats_80_32_20_20.txt
+   user                          1.07
+./stats_140_64_12_20.txt
+   user                          1.09
+./stats_140_64_20_20.txt
+   user                          1.08
+./stats_80_32_24_20.txt
+   user                          1.06
+./stats_160_32_24_20.txt
+   user                          1.07
+./stats_80_32_24_10.txt
+   user                          1.03
+./stats_140_64_12_15.txt
+   user                          1.06
+./stats_160_64_20_15.txt
+   user                          1.07
+./stats_80_32_20_15.txt
+   user                          1.07
+./stats_120_64_24_20.txt
+   user                          1.07
+./stats_120_32_12_20.txt
+   user                          1.09
+./stats_120_64_16_20.txt
+   user                          1.08
+./stats_100_32_16_10.txt
+   user                          1.03
+./stats_120_64_16_10.txt
+   user                          1.03
+./stats_120_64_12_10.txt
+   user                          1.03
+./stats_60_32_12_15.txt
+   user                          1.05
+./stats_160_32_16_10.txt
+   user                          1.03
+./stats_140_64_24_10.txt
+   user                          1.03
+./stats_120_32_20_10.txt
+   user                          1.03
+./stats_140_64_24_15.txt
+   user                          1.07
+./stats_60_32_12_10.txt
+   user                          1.03
+./stats_60_32_20_10.txt
+   user                          1.03
+./stats_160_32_24_15.txt
+   user                          1.07
+./stats_100_64_12_15.txt
+   user                          1.06
+./stats_100_32_20_10.txt
+   user                          1.03
+./stats_140_32_16_10.txt
+   user                          1.03
+./stats_160_64_12_20.txt
+   user                          1.09
+./stats_120_32_24_10.txt
+   user                          1.03
+./stats_100_32_12_15.txt
+   user                          1.06
+./stats_80_64_24_20.txt
+   user                          1.06
+./stats_120_32_24_15.txt
+   user                          1.07
+./stats_160_32_24_10.txt
+   user                          1.03
+./stats_80_32_12_20.txt
+   user                          1.07
+./stats_100_64_20_10.txt
+   user                          1.03
+./stats_80_64_20_15.txt
+   user                          1.07
+./stats_140_32_12_15.txt
+   user                          1.06
+./stats_140_32_12_10.txt
+   user                          1.03
+./generate_best_user.sh
+./stats_80_64_24_10.txt
+   user                          1.03
+./stats_100_64_12_10.txt
+   user                          1.03
+./stats_60_32_20_15.txt
+   user                          1.07
+./stats_60_64_16_15.txt
+   user                          1.05
+./stats_100_64_12_20.txt
+   user                          1.09
+./stats_60_64_12_20.txt
+   user                          1.07
+./stats_100_64_24_15.txt
+   user                          1.07
+./stats_60_32_16_20.txt
+   user                          1.07
+./stats_160_32_20_15.txt
+   user                          1.07
+./stats_160_64_24_10.txt
+   user                          1.03
+./stats_120_64_12_20.txt
+   user                          1.09
+./stats_140_32_20_10.txt
+   user                          1.03
