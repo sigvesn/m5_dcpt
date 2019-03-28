@@ -7,8 +7,10 @@
 #include <algorithm>
 
 
-#define ENTRY_TABLE_SIZE      160
-#define DELTA_BUFFER_SIZE     24
+// ETS_IFL_DBS_DW
+// 280_64_12_20 -> 1.09
+#define ENTRY_TABLE_SIZE      280
+#define DELTA_BUFFER_SIZE     12
 #define DELTA_WIDTH           20
 #define IN_FLIGHT_BUFFER_SIZE 64
 
@@ -58,7 +60,7 @@ struct dcpt_table_entry {
 
 struct dcpt_table {
     std::map<Addr, dcpt_table_entry> table;
-    std::queue<Addr> program_counters;
+    std::list<Addr> program_counters;
 
     dcpt_table_entry& insert(Addr);
 	dcpt_table_entry& lookup(Addr, bool&);

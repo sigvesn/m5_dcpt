@@ -76,6 +76,7 @@ vector<Addr> prefetch_filter(dcpt_table_entry& entry, vector<Addr>& candidates)
 			in_flight.push(*candidate);
         }
 
+		// Already issued this sequence?
         if (*candidate == entry.last_prefetch) {
             prefetches.clear();
 		}

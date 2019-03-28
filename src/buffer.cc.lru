@@ -2,6 +2,7 @@
 #include "interface.hh"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -15,14 +16,23 @@ void circular_buffer::push(int64_t value)
 
 dcpt_table_entry& dcpt_table::insert(Addr pc)
 {
-    if (program_counters.size() > ENTRY_TABLE_SIZE) {
-		// TODO: LRU
-		Addr old_pc = program_counters.front();
-        program_counters.pop();
-        table.erase(old_pc);
+	// LRU-based eviction
+
+	program_counters.push_front(pc);
+
+	// Delete existing pc, promoting it to MRU
+	std::list<Addr>::iterator existing = std::find(program_counters.begin(), program_counters.end(), pc);
+	if (existing != program_counters.end()) {
+		program_counters.erase(existing);
+	}
+
+	// Evict LRU
+	if (program_counters.size() > ENTRY_TABLE_SIZE) {
+		Addr old_pc = program_counters.back();
+		program_counters.pop_back();
+		table.erase(old_pc);
     }
 
-    program_counters.push(pc);
     return table[pc];
 }
 
