@@ -11,10 +11,8 @@ function add {
     let idx++
 }
 
-add 98 32 19 12
-
-for t in $(seq 3 8); do
-    for i_f in $(seq 1 2); do
+for t in $(seq 9 15); do
+    for i_f in $(seq 2 2); do
         for d_b in $(seq 3 6); do
             for d_w in $(seq 2 4); do
 
