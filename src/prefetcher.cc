@@ -50,7 +50,7 @@ void prefetch_access(AccessStat stat)
 		int64_t delta = stat.mem_addr - entry.last_addr;
 
 		// Discard delta if it's wider than max delta width
-		if (!(delta > pow(2, DELTA_WIDTH) - 1))
+		if (delta > pow(2, DELTA_WIDTH) - 1)
 			delta = 0;
 
 		entry.delta_buffer.push(delta);
