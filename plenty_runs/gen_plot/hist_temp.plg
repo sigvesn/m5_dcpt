@@ -1,0 +1,18 @@
+#!/usr/bin/gnuplot -persist
+
+GNUTERM = "x11"
+
+set ylabel 'Speedup'
+set loadpath './gnuplot-colorbrewer/diverging'   \
+             './gnuplot-colorbrewer/qualitative' \
+             './gnuplot-colorbrewer/sequential'
+
+load 'Set3.plt'
+
+set style data histogram
+set style histogram cluster gap 1
+set style fill solid border -1
+set boxwidth 0.9
+set xtic rotate by -45 scale 0
+
+plot for [COL=2:5] '~/prefetcher/plenty_runs/benchmark.txt' using COL:xticlabels(1) title columnheader ls COL

@@ -1,8 +1,0 @@
-./no zero delta/stats 160 32 12 15 1.06
-./no zero delta/stats 160 32 16 15 1.05
-./no zero delta/stats 160 32 20 15 1.07
-./no zero delta/stats 160 32 24 15 1.07
-./no zero delta/stats 160 64 12 15 1.06
-./no zero delta/stats 160 64 16 15 1.05
-./no zero delta/stats 160 64 20 15 1.07
-./no zero delta/stats 160 64 24 15 1.07

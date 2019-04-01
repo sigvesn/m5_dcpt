@@ -14,3 +14,4 @@ src/*.swo
 !gdb.sh
 !plenty_runs/
 !plenty_runs/*
+!plenty_runs/*/*

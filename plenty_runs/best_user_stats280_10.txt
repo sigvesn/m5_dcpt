@@ -1,4 +1,0 @@
-./no zero delta/stats 280 64 12 10 1.03
-./no zero delta/stats 280 64 16 10 1.03
-./no zero delta/stats 280 64 20 10 1.03
-./no zero delta/stats 280 64 24 10 1.03
