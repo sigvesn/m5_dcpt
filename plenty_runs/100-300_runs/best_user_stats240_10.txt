@@ -1,0 +1,4 @@
+./no zero delta/stats 240 64 12 10 1.03
+./no zero delta/stats 240 64 16 10 1.03
+./no zero delta/stats 240 64 20 10 1.03
+./no zero delta/stats 240 64 24 10 1.03

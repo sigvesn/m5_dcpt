@@ -9,9 +9,10 @@
 
 // ETS_IFL_DBS_DW
 // 280_64_12_20 -> 1.09
-#define ENTRY_TABLE_SIZE      280
-#define DELTA_BUFFER_SIZE     12
-#define DELTA_WIDTH           10
+// Previous best 100, 12, 15, *
+#define ENTRY_TABLE_SIZE      80
+#define DELTA_BUFFER_SIZE     10
+#define DELTA_WIDTH           14
 #define IN_FLIGHT_BUFFER_SIZE 64
 
 

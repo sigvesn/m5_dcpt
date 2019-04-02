@@ -11,12 +11,12 @@ function add {
     let idx++
 }
 
-for t in $(seq 2 6); do
+for t in $(seq 0 11); do
     for i_f in $(seq 2 2); do
-        for d_b in $(seq 3 6); do
-            for d_w in $(seq 2 6); do
+        for d_b in $(seq 0 2); do
+            for d_w in $(seq 0 4); do
 
-                add $(($t*50)) $(($i_f*32)) $(($d_b*4)) $(($d_w*5))
+                add $((90+$t)) $(($i_f*32)) $((9+$d_b)) $((10+$d_w))
 
             done
         done

@@ -1,0 +1,8 @@
+./no zero delta/stats 200 64 12 10 1.03
+./no zero delta/stats 200 64 16 10 1.03
+./no zero delta/stats 200 64 20 10 1.03
+./no zero delta/stats 200 64 24 10 1.03
+200 64 12 10 1.05
+200 64 16 10 1.05
+200 64 20 10 1.04
+200 64 24 10 1.03
