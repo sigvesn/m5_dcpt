@@ -14,9 +14,9 @@ function add {
 for t in $(seq 1 1); do
     for i_f in $(seq 2 2); do
         for d_b in $(seq 4 24); do
-            for d_w in $(seq 1 1); do
+            for d_w in $(seq 0 10); do
 
-                add $(($t*88)) $(($i_f*32)) $(($d_b*1)) $(($d_w*14))
+                add $(($t*88)) $(($i_f*32)) $(($d_b*1)) $((10+$d_w))
 
             done
         done
